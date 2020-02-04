@@ -1,0 +1,42 @@
+# This is the smtpd server system-wide configuration file
+# Use include "/etc/mail/smtpd.conf.local" in smtpd.conf to use this
+
+table aliases file:/etc/mail/aliases
+table vusers file:/etc/mail/vusers
+table vdomains file:/etc/hosting/domains.conf
+table creds file:/etc/mail/creds
+
+table spammers file:/etc/mail/spam
+
+# Contact certs (use /etc/scripts/hosting.sh first)
+include "/etc/hosting/mail-pki.conf"
+
+# Check reverse DNS checking as rudimentary spam filter
+filter "check_rdns" phase connect match !rdns disconnect "550 client reject"
+filter "check_fcrdns" phase connect match !fcrdns disconnect "550 client reject"
+
+# To accept external mail, replace with: listen on all
+listen on lo0
+
+# Your main mail server
+listen on egress tls-require pki mail.example.com hostname mail.example.com \
+	no-dsn mask-src filter { check_rdns, check_fcrdns }
+
+# Local delivery action
+action "local" mbox alias <aliases>
+
+# Optional default hosted action
+action "hosted" maildir "~/Maildir/%{dest.domain}/%{dest.user}" junk virtual <vusers>
+
+# Spam filters
+match mail-from <spammers> for any reject
+match rcpt-to <spammers> for any reject
+match helo <spammers> for any reject
+match from src <spammers> for any reject
+
+# Hosted mail (generated with /etc/scripts/hosting.sh)
+include "/etc/mail/helosrc"
+
+# Local mail
+match for local action "local"
+
