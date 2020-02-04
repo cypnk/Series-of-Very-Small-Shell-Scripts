@@ -1,0 +1,30 @@
+VERBOSESTATUS=0
+LOGINACCOUNTING=0
+# Some silence in the logs
+
+# This is the daily run script
+
+# Local daily maintenance log
+OUT=/etc/scripts/daily-output.txt
+touch $OUT
+
+echo "Daily `date`" >> $OUT
+
+# Spamhaus
+/etc/scripts/spamhaus.sh >> $OUT 2>&1
+
+# Other abuse blocklists
+/etc/scripts/abuse.sh >> $OUT 2>&1
+
+# Reload if PF config has no errors
+/etc/scripts/pfreload.sh >> $OUT 2>&1
+
+# Run updates
+/usr/sbin/syspatch >> $OUT 2>&1
+/usr/sbin/pkg_add -Uu >> $OUT 2>&1
+/usr/sbin/fw_update >> $OUT 2>&1
+
+# Package integrity
+/usr/sbin/pkg_check -xf >> $OUT 2>&1
+
+echo "" >> $OUT
