@@ -1,0 +1,3 @@
+# This file should be added to crontab and set to run every minute
+
+/etc/scripts/mail.sh 2>/dev/null
