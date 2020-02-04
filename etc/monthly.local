@@ -1,0 +1,7 @@
+# Monthly maintenance tasks
+
+# Rotate logs
+/etc/scripts/logrotate.sh
+
+# Reboot to apply any update changes
+reboot
