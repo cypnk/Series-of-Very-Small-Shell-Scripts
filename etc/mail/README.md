@@ -1,4 +1,4 @@
-This is the mai configuration directory
+This is the mail configuration directory
 
 The *smtpd.conf.local* file is the server-specific configuration which can be included in smtpd.conf that is normally located this folder.
 
