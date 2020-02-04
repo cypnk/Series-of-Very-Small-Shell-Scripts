@@ -1,0 +1,25 @@
+SOCKSPort 0
+SafeLogging 1
+#HeartbeatPeriod 60 minutes
+LongLivedPorts 80,443
+NumCPUs 4
+KeepalivePeriod 30
+CircuitStreamTimeout 30
+MaxCircuitDirtiness 60
+
+RunAsDaemon 1
+Log notice file /var/log/tor
+DataDirectory /var/tor
+User _tor
+
+ExitPolicy reject *:* # no exits allowed
+
+# Performance
+AvoidDiskWrites 1
+
+# Add your hidden services here:
+
+HiddenServiceDir /var/tor/myhiddenservice/
+HiddenServiceVersion 3
+HiddenServicePort 80 127.0.0.1:80
+
