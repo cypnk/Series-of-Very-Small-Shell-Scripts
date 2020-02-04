@@ -1,0 +1,16 @@
+# Update DNS
+OUT=/etc/scripts/weekly-output.txt
+touch $OUT
+
+echo "Weekly `date`" >> $OUT
+
+# Update Let's Encrypt certificates
+/etc/scripts/acme.sh >> $OUT 2>&1
+
+echo "" >> $OUT
+
+# Refresh to handle any package updates
+rcctl restart tor
+rcctl restart php73_fpm
+rcctl restart httpd
+
