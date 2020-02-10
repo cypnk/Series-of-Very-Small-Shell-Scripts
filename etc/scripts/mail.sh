@@ -36,28 +36,31 @@ for DOMAIN in `cat $DOMAINS`; do
 	# Iterate and parse maildir
 	for MAIL in $(find $RC -type d -name "new" ); do	
 		if [[ $MAIL == *".Junk"* ]]; then
-			# Destination junk
-			mkdir -p "$MD/junk"
 			
 			# User junk dir
 			DR="${MAIL%/*/*}"
 			US=`basename $DR`
+			JM="${MD}/${US}/junk"
+			
+			# Destination junk
+			mkdir -p $JM
 			
 			# Junkmail and count
 			ML="$DR/.Junk/new/*.local"
 			FL=`ls -l $ML 2>/dev/null | wc -l` || continue
 			
 			if [ $FL != 0 ]; then
-				mv $ML "${MD}/junk/"
+				mv $ML "${JM}/"
 				echo "`date` - $FL junkmail for $US@$DOMAIN" >> $MLOG
 			fi
 		else
-			# Destination new mail
-			mkdir -p "$MD/new"
-			
 			# User mail dir
 			DR="${MAIL%/*}"
 			US=`basename $DR`
+			MU="${MD}/${US}/new"
+			
+			# Destination new mail
+			mkdir -p $MU
 			
 			# Mail and count
 			ML="$DR/new/*.local"
@@ -65,7 +68,7 @@ for DOMAIN in `cat $DOMAINS`; do
 			
 			# Update log
 			if [ $FL != 0  ]; then
-				mv $ML "${MD}/new/"
+				mv $ML "${MU}/"
 				echo "`date` - $FL mail for $US@$DOMAIN" >> $MLOG
 			fi
 		fi
