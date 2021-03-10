@@ -11,7 +11,8 @@ server "mail.example" {
 	include "/etc/hosting/acme.conf"
 	include "/etc/hosting/blocked.conf"
 	
-	hsts
+	hsts max-age 31536000
+	hsts subdomains
 	tls {
 		certificate "/etc/ssl/mail.example.pem"
 		key "/etc/ssl/private/mail.example.key"		
