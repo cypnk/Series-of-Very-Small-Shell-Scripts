@@ -12,9 +12,11 @@ touch $PFDROP
 
 # Lists
 set -A BLOCKLISTS \
-	"https://lists.blocklist.de/lists/all.txt" \
-	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt" \
-	"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"
+	"https://lists.blocklist.de/lists/all.txt"
+	
+	# Future use
+	#"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv4.txt"
+	#"https://raw.githubusercontent.com/ejrv/VPNs/master/vpn-ipv6.txt"
 
 
 # Create tempfiles
@@ -36,7 +38,7 @@ for URL in "${BLOCKLISTS[@]}"; do
 	# Clean up the list into pf digestible format (and remove comments)
 	#cut -d ';' -f 1 $TMP1 | cut -d '/' -f 1 | cut -d '#' -f 1 | sed -e '/^$/d' >>$TMP2
 	if [ -f $TMP1 ]; then
-		if grep -i "500\|504\|Sorry\|service\|default\|error" $TMP1; then
+		if grep -i "500\|502\|504\|Sorry\|service\|default\|error" $TMP1; then
 			rm $TMP1
 			TMP1=`mktemp -t dropraw.XXXXXXXXXX` || exit 1
 			echo -e "# Error downloading: $URL\n" >>$TMP2
