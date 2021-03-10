@@ -1,0 +1,15 @@
+# These should never be sources of email
+*.example.com
+*.example.net
+*.example.org
+
+# Near-constant source of spam from these TLDs
+*.ooo
+*.icu
+*.date
+*.asdsl
+*.loan
+*.work
+*.gdn
+*.bid
+*.racing
