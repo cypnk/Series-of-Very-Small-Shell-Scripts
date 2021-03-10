@@ -2,7 +2,8 @@ server "www.example" {
 	listen on egress port 80
 	listen on egress tls port 443
 	
-	hsts
+	hsts max-age 31536000
+	hsts subdomains
 	tls {
 		certificate "/etc/ssl/example.pem"
 		key "/etc/ssl/private/example.key"
@@ -20,7 +21,7 @@ server "example" {
 	include "/etc/hosting/blocked.conf"
 	
 	connection {
-		max requests 10
+		max requests 100
 		request timeout 10
 	}
 	
@@ -31,7 +32,8 @@ server "example" {
 	
 	root "/sites/example/htdocs"
 	
-	hsts
+	hsts max-age 31536000
+	hsts subdomains
 	tls {
 		certificate "/etc/ssl/example.pem"
 		key "/etc/ssl/private/example.key"
