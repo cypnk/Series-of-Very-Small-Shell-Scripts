@@ -1,0 +1,13 @@
+# Block dynamic or temporary DNS sources of mail
+.*\.dyn\..*
+.*\.dsl\..*
+.*\.dynamic\..*
+.*\.dynamicip\..*
+.*\-dynamic\-ip\..*
+.*\.pppoe\..*
+.*\.tmp\..*
+.*\.temp\..*
+
+# Troublesome (sub)domains
+.*\.example\..*
+.*\.test\..*
