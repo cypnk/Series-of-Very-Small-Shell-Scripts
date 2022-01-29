@@ -8,6 +8,10 @@ DT=`date '+%Y-%m'`
 # Primary domain list
 DOMAINS="/etc/hosting/domains.conf"
 
+# Archives
+SYSLOGS="/var/log/archive-${DT}"
+WEBLOGS="/var/www/logs/archive-${DT}"
+
 # Rotate access and error logs
 for DOMAIN in `cat $DOMAINS`; do
 	# Copy over and refresh
@@ -18,5 +22,13 @@ for DOMAIN in `cat $DOMAINS`; do
 	echo "" > "/var/www/logs/sites/$DOMAIN/error.log"
 done
 
+mkdir -p "${SYSLOGS}"
+mkdir -p "${WEBLOGS}"
+
+mv /var/log/*.gz "${SYSLOGS}/"
+
+mv /var/www/logs/access-* "${WEBLOGS}/"
+mv /var/www/logs/error-* "${WEBLOGS}/"
+mv /var/www/logs/*.gz "${WEBLOGS}/"
 
 exit 0
