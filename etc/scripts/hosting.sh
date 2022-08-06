@@ -108,8 +108,11 @@ for DOMAIN in `cat $DOMAINS`; do
 	# Setup the main web hosting root 
 	mkdir -p "$DOMWEB/htdocs"
 	
-	# Create the default index
-	touch $DOMWEB/htdocs/index.html
+	if [ ! -f "$DOMWEB/htdocs/index.html" ]; then
+		# Create the default index
+		touch $DOMWEB/htdocs/index.html
+		echo "$DOMAIN" >> $DOMWEB/htdocs/index.html
+	fi
 	
 	# Mail stuff
 	
@@ -135,6 +138,7 @@ for DOMAIN in `cat $DOMAINS`; do
 			# Default users (postmaster is required)
 			echo "admin@$DOMAIN		admin" >> $DOMWEB/mail/users
 			echo "postmaster@$DOMAIN	admin" >> $DOMWEB/mail/users
+			echo "robot@$DOMAIN		admin" >> $DOMWEB/mail/users
 		fi
 		
 		# Set permissions appropriate for the static folder
