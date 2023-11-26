@@ -35,9 +35,9 @@ for URL in "${BLOCKLISTS[@]}"; do
 	
 	# Clean up the list into pf digestible format
 	if [ -f $TMP1 ]; then
-		if grep -i "500\|504\|Sorry\|service\|error\|found" $TMP; then
+		if grep -i "500\|504\|Sorry\|service\|error\|found" $TMP1; then
 			rm $TMP1
-			TMP=`mktemp -t dropraw.XXXXXXXXXX` || exit 1
+			TMP1=`mktemp -t dropraw.XXXXXXXXXX` || exit 1
 			echo -e "# Error downloading: $URL\n\n" >>$TMP2
 			continue
 		fi
