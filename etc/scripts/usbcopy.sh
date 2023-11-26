@@ -45,7 +45,7 @@ done
 ROOT=/mnt/pen
 
 # Directories and mountpoints to backup
-SOURCES="/etc/backupconf /etc/hosting /etc/mail /etc/tor /etc/ssl /etc/pftables /etc/scripts /var/www/sites"
+SOURCES="/etc/backupconf /etc/hosting /etc/mail /etc/tor /etc/ssl /etc/pftables /etc/scripts /var/www/sites /var/www/errdocs"
 
 mkdir -p $ROOT
 mount -t msdos /dev/sd1i $ROOT
