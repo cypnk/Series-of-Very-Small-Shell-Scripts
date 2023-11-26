@@ -14,7 +14,7 @@ set -A CONFIGS	\
 	"installurl"		\
 	"pf.conf"		\
 	"httpd.conf"		\
-	"php-7.3.ini"		\
+	"php-8.2.ini"		\
 	"php-fpm.conf"		\
 	"rc.conf.local"		\
 	"resolv.conf"		\
