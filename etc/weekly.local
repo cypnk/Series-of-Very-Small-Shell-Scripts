@@ -11,6 +11,6 @@ echo "" >> $OUT
 
 # Refresh to handle any package updates
 rcctl restart tor
-rcctl restart php80_fpm
+rcctl restart php82_fpm
 rcctl restart httpd
 
