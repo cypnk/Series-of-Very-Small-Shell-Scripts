@@ -11,6 +11,9 @@ TMP=`mktemp -t domains.XXXXXXXXXX` || exit 1
 # Extract domain name from conf file
 sed -n '/^domain/p' $CONF | cut -d ' ' -f 2 > $TMP
 
+mkdir -p -m 700 /etc/ssl/private
+mkdir -p -m 755 /var/www/acme
+
 # Get certs for each domain
 for DOMAIN in `cat $TMP`; do 
 	# Force update
