@@ -48,8 +48,7 @@ ROOT=/mnt/pen
 SOURCES="/etc/backupconf /etc/hosting /etc/mail /etc/tor /etc/ssl /etc/pftables /etc/scripts /var/www/sites /var/www/errdocs"
 
 mkdir -p $ROOT
-mount -t msdos /dev/sd1i $ROOT
-#mount /dev/sd1i $ROOT
+mount /dev/sd1i $ROOT || exit 1
 
 # check free space
 USED=`df $ROOT|awk '/^\// { print substr($5, 0, length($5) - 1) }'`
