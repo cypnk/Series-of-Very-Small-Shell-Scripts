@@ -16,11 +16,10 @@ mkdir -p -m 755 /var/www/acme
 
 # Get certs for each domain
 for DOMAIN in `cat $TMP`; do 
-	# Force update
-	#acme-client -vFAD $DOMAIN
-	
 	# Update if needed
-	acme-client $DOMAIN
+	if ! acme-client -n "$DOMAIN"; then
+		acme-client "$DOMAIN" || exit 1
+	fi
 done
 
 # Reload config
