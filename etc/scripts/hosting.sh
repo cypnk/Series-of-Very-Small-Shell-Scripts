@@ -38,11 +38,11 @@ DPUB="/etc/mail/dkim/dns.txt"
 
 # Domain templates 
 # STPL = domain hosting, DTPL = Let's Encrypt mail domain config
-STPL="/etc/hosting/templates/domain.tpl"
-DTPL="/etc/hosting/templates/mdomain.tpl"
+STPL="/etc/hosting/templates/acme.tpl"
+DTPL="/etc/hosting/templates/mail-acme.tpl"
 
 # Mail domain hosting template for httpd
-MTPL="/etc/hosting/templates/mail.tpl"
+MTPL="/etc/hosting/templates/mail-www.tpl"
 
 # Mail PKI cert setting template for smtpd
 PTPL="/etc/hosting/templates/mail-pki.tpl"
@@ -51,10 +51,10 @@ PTPL="/etc/hosting/templates/mail-pki.tpl"
 HELO="/etc/hosting/templates/smtpd.tpl"
 
 # Initial hosting configuration (before TLS cert)
-ITPL="/etc/hosting/templates/hosting-init.tpl"
+ITPL="/etc/hosting/templates/www.tpl"
 
 # Post TLS cert hosting template
-HTPL="/etc/hosting/templates/hosting.tpl"
+HTPL="/etc/hosting/templates/www.tls.tpl"
 
 # Generated 
 
