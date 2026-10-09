@@ -14,11 +14,11 @@ DOMAINS="/etc/hosting/domains.conf"
 # Configuration files
 
 # Let's Encrypt hosting configuration (generated)
-CONF="/etc/hosting/acme-domains.conf"
+CONF="/etc/hosting/generated/acme-domains.conf"
 
 # Mail hosting settings (generated)
-MAIL="/etc/hosting/mail-domains.conf"
-MPKI="/etc/hosting/mail-pki.conf"
+MAIL="/etc/hosting/generated/mail-domains.conf"
+MPKI="/etc/hosting/generated/mail-pki.conf"
 
 # Generated configs per domain for for httpd(8)
 DGEN="/etc/hosting/generated/"
@@ -61,6 +61,7 @@ HTPL="/etc/hosting/templates/www.tls.tpl"
 typeset -Z6 IDX
 IDX=0
 
+
 # Temp file for domains
 TMP1=`mktemp -t domains.XXXXXXXXXX` || exit 1
 TMP2=`mktemp -t domains.XXXXXXXXXX` || exit 1
@@ -81,8 +82,8 @@ echo "" > $DPUB
 
 # Generate domain config block from template
 for DOMAIN in `cat $DOMAINS`; do 		
-	sed -e s/example/$DOMAIN/g $HTPL > $DGEN$DOMAIN.conf
-	sed -e s/example/$DOMAIN/g $ITPL > $DGEN$DOMAIN-initial.conf
+	sed -e s/example/$DOMAIN/g $HTPL > $DGEN$DOMAIN.tls.conf
+	sed -e s/example/$DOMAIN/g $ITPL > $DGEN$DOMAIN.conf
 	
 	# Hosting web root and log locations
 	DOMWEB="/var/www/sites/$DOMAIN"
@@ -130,7 +131,7 @@ for DOMAIN in `cat $DOMAINS`; do
 		# Create the static default index
 		touch $DOMWEB/static/index.html
 		
-		# Create default users if users doesn't exist yet
+		# Create default users if users table doesn't exist yet
 		if [ ! -f "$DOMWEB/mail/users" ]; then
 			# Users table file used by smtpd
 			touch $DOMWEB/mail/users
@@ -176,7 +177,7 @@ for DOMAIN in `cat $DOMAINS`; do
 	
 	# Create the mail subdomain for Let's Encrypt
 	sed -e s/example/$DOMAIN/g $DTPL >> $TMP6
-		
+	
 	# Increment index
 	IDX=$((IDX+1))
 done
@@ -192,14 +193,17 @@ sed -i '/www.shop./d' $TMP1
 sed -i '/www.cam./d' $TMP1
 sed -i '/www.gallery./d' $TMP1
 
-# Overwrite domains
+# Append mail subdomain to generated domains
 cat $TMP6 >> $TMP1
-mv $TMP1 $CONF
-mv $TMP2 $MAIL
-mv $TMP3 $MPKI
-mv $TMP4 $MHEL
-mv $TMP5 $VUSR
 
+# Overwrite domains config files
+mv $TMP1 $CONF	# Acme hosting configuration
+mv $TMP2 $MAIL	# Mail Acme domain configuration
+mv $TMP3 $MPKI	# Mail PKI domains
+mv $TMP4 $MHEL	# Mail HELO
+mv $TMP5 $VUSR	# Mail default user (admin)
+
+# Cleanup
 rm $TMP6
 
 exit 0
