@@ -10,7 +10,6 @@ PFDROP=/etc/pftables/spamhaus
 # Lists
 set -A BLOCKLISTS \
 	"https://www.spamhaus.org/drop/drop.txt"	\
-	"https://www.spamhaus.org/drop/edrop.txt"	\
 	"https://www.spamhaus.org/drop/dropv6.txt"
 
 
